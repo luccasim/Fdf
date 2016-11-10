@@ -1,4 +1,4 @@
-#include "fdf.h"
+#include "ft_mlx.h"
 #include <stdlib.h>
 
 void	ft_mlx_image_del(t_image *img)

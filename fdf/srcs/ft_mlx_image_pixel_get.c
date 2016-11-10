@@ -1,4 +1,4 @@
-#include "fdf.h"
+#include "ft_mlx.h"
 
 uint32_t	ft_mlx_image_pixel_get(t_image *img, int x, int y)
 {

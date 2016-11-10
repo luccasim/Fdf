@@ -1,4 +1,4 @@
-#include "fdf.h"
+#include "ft_mlx.h"
 
 void	ft_mlx_window_pixel_put(t_window *win, int x, int y, int c)
 {

@@ -1,4 +1,5 @@
-#include "fdf.h"
+#include "ft_mlx.h"
+#include "libft.h"
 
 void	ft_mlx_image_pixel_put(t_image *img, int x, int y, int c)
 {
@@ -15,6 +16,6 @@ void	ft_mlx_image_pixel_put(t_image *img, int x, int y, int c)
 	{
 		pix = b * img->size_line + a * (img->bpp / 8);
 		color = mlx_get_color_value(ft_mlx_init_sglt(), c);
-		ft_memcpy(&(img->addr[pix]), &(color), 8);
+		ft_memcpy(&(img->addr[pix]), &(color), 4);
 	}
 }

@@ -1,109 +1,69 @@
 #ifndef FDF_H
 # define FDF_H
 
-# include "libft.h"
-# include "ft_printf.h"
-# include "ft_unix.h"
+# include "ft_mlx.h"
+# include "ft_tool.h"
 # include "list.h"
-# include <mlx.h>
-# include <inttypes.h>
-# include <fcntl.h>
-# include <stdlib.h>
 
-typedef enum 	e_mlx_key
-{
-	KEY_A = 0,
-	KEY_B = 11,
-	KEY_C = 8,
-	KEY_D = 2,
-	KEY_E = 14,
-	KEY_F = 3,
-	KEY_G = 5,
-	KEY_H = 4,
-	KEY_I = 34,
-	KEY_J = 38,
-	KEY_K = 40,
-	KEY_L = 37,
-	KEY_M = 46,
-	KEY_N = 45,
-	KEY_O = 31,
-	KEY_P = 35,
-	KEY_Q = 12,
-	KEY_R = 15,
-	KEY_S = 1,
-	KEY_T = 17,
-	KEY_U = 32,
-	KEY_V = 9,
-	KEY_W = 13,
-	KEY_X = 7,
-	KEY_Y = 16,
-	KEY_Z = 6,
-	KEY_1 = 18,
-	KEY_2 = 19,
-	KEY_3 = 20,
-	KEY_4 = 21,
-	KEY_5 = 23,
-	KEY_6 = 22,
-	KEY_7 = 26,
-	KEY_8 = 28,
-	KEY_9 = 25,
-	KEY_0 = 29,
-	KEY_MOIN = 27,
-	KEY_PLUS = 24,
-	KEY_RET = 36,
-	KEY_SPACE = 49,
-	KEY_ESC = 53,
-	KEY_NONE
-}				t_mlx_key;
+# define FDF_W_HEIGTH			850
+# define FDF_W_WIDTH			850
+# define FDF_MOVE				50
+# define FDF_DIST				15
+# define FDF_DIST_MAX			50
+# define FDF_USAGE_INPUT		0
+# define FDF_USAGE_FILE_FORMAT	2
+# define FDF_USAGE_ERROR		4
 
-typedef struct	s_window
+typedef enum	e_fdf_color
 {
-	void		*mlx;
-	void		*win;
-	uint32_t	height;
-	uint32_t	width;
-	char		*name;
-}				t_window;
+	FDF_DARK = 0,
+	FDF_BLUE,
+	FDF_GREEB,
+	FDF_RED,
+	FDF_WHITE
+}				t_fdf_color;
 
-typedef struct	s_image
+typedef struct	s_point
 {
-	void		*img;
-	void		*addr;
-	uint32_t	height;
-	uint32_t	width;
-	int			bpp;
-	int			endian;
-	int			size_line;
-}				t_image;
+	double		x;
+	double		y;
+}				t_point;
 
 typedef struct	s_vector
 {
-	int			x;
-	int			y;
-	int			dist;
+	t_point		point;
+	double		dist;
 }				t_vector;
 
 typedef struct	s_map
 {
-	int			**map;
+	double		**map;
 	size_t		map_size;
 	size_t		line_size;
+	size_t		dist;
 }				t_map;
 
-//mlx bases :
-void		*ft_mlx_init_sglt(void);
-// window
-t_window	*ft_mlx_window_new(char *name, uint32_t height, uint32_t width);
-void		ft_mlx_window_pixel_put(t_window *w, int x, int y, int c);
-void		ft_mlx_window_del(t_window *win);
-void		ft_mlx_window_clear(t_window *win);
-// pixel
-// void		ft_mlx_pixel_image(t_image *img, t_pixel *pix);
-// void		ft_mlx_pixel_window(t_window *win, t_pixel *pix);
-// image
-t_image		*ft_mlx_image_new(uint32_t height, uint32_t width);
-void		ft_mlx_image_pixel_put(t_image *i, int x, int y, int c);
-uint32_t	ft_mlx_image_pixel_get(t_image *i, int x, int y);
-void		ft_mlx_image_del(t_image *img);
-//fdf :
+typedef struct	s_fdf
+{
+	t_window	*win;
+	t_image		*img;
+	t_map		*map;
+	t_vector	*vect;
+	int			color;
+}				t_fdf;
+
+t_map	*parser(int ac, char **av);
+void	mlx_event(t_fdf *fdf);
+void	fdf_draw(t_fdf *fdf);
+
+/*
+** Mlx key hook function
+*/
+
+void		set_color(t_fdf *fdf);
+void		zoom_map(int key, t_fdf *fdf);
+void		reset_vector(t_fdf *fdf);
+void		change_vector(t_fdf *fdf, int keycode);
+void		fdf_put_image(t_fdf *fdf);
+
 #endif

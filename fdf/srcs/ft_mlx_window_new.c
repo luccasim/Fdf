@@ -1,4 +1,6 @@
-#include "fdf.h"
+#include "ft_mlx.h"
+#include "libft.h"
+#include "ft_unix.h"
 
 t_window	*ft_mlx_window_new(char *name, uint32_t height, uint32_t width)
 {
@@ -19,9 +21,7 @@ t_window	*ft_mlx_window_new(char *name, uint32_t height, uint32_t width)
 			new->mlx = mlx;
 		}
 		else
-			PERROR("fail alloction for window ptr");
+			ERROR("fail alloction for window ptr");
 	}
-	else
-		PERROR("mlx connexion fail, can not create a window");
 	return (new);
 }
