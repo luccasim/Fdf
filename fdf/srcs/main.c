@@ -29,7 +29,7 @@ static int				fdf_key_hook(int keycode, void *param)
 	if (key == MLX_KEY_ESC)
 		exit(0);
 	if (key == MLX_KEY_D)
-		ft_mlx_window_clear(fdf->win);
+		set_degrade(fdf);
 	if (key == MLX_KEY_C)
 		set_color(fdf);
 	if ( key == MLX_KEY_PLUS || key == MLX_KEY_MOIN)
@@ -39,6 +39,18 @@ static int				fdf_key_hook(int keycode, void *param)
 	if (IS_ARROW(key))
 		change_vector(fdf, key);
 	return (keycode);
+}
+
+static int				fdf_mouse_hook(int button, int x, int y, void *p)
+{
+	t_fdf *fdf;
+
+	fdf = (t_fdf*)p;
+	if (button == 5)
+		zoom_map(button, fdf);
+	else if (button == 4)
+		zoom_map(button, fdf);
+	return (1);
 }
 
 static int				fdf_expose_hook(void *param)
@@ -84,6 +96,7 @@ int						main(int ac, char **av)
 		return (0);
 	fdf = fdf_init(win, map);
 	mlx_key_hook(win->win, fdf_key_hook, fdf);
+	mlx_mouse_hook(win->win, fdf_mouse_hook, fdf);
 	mlx_expose_hook(win->win, fdf_expose_hook, fdf);
 	mlx_loop(win->mlx);
 	return (0);

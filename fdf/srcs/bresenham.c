@@ -8,7 +8,7 @@ static void		bresenham_neg(t_fdf *fdf, t_point inc, t_point d, t_point a)
 
 	i = 1;
 	cumul = d.x / 2;
-	color = MLX_WHITE;
+	color = color_level(fdf, a.color);
 	while (i <= d.x)
 	{
 		a.x = a.x + inc.x;
@@ -17,7 +17,7 @@ static void		bresenham_neg(t_fdf *fdf, t_point inc, t_point d, t_point a)
 		{
 			cumul = cumul - d.x;
 			a.y = a.y + inc.y;
-			color = (fdf->color) ? MLX_RED : MLX_WHITE;
+			color = color_level(fdf, ++a.color);
 		}
 		ft_mlx_image_pixel_put(fdf->img, a.x, a.y, color);
 		i++;
@@ -32,7 +32,7 @@ static void		bresenham_pos(t_fdf *fdf, t_point inc, t_point d, t_point a)
 
 	i = 1;
 	cumul = d.y / 2;
-	color = MLX_WHITE;
+	color = color_level(fdf, a.color);
 	while (i <= d.y)
 	{
 		a.y = a.y + inc.y;
@@ -41,7 +41,7 @@ static void		bresenham_pos(t_fdf *fdf, t_point inc, t_point d, t_point a)
 		{
 			cumul = cumul - d.y;
 			a.x = a.x + inc.x;
-			color = (fdf->color) ? MLX_RED : MLX_WHITE;
+			color = color_level(fdf, ++a.color);
 		}
 		ft_mlx_image_pixel_put(fdf->img, a.x, a.y, color);
 		i++;
@@ -56,13 +56,13 @@ static void		draw_line(t_point i, t_point f, t_fdf *fdf)
 
 	a.x = i.x;
 	a.y = i.y;
+	a.color = i.color;
 	d.x = f.x - i.x;
 	d.y = f.y - i.y;
 	inc.x = (d.x > 0) ? 1 : -1;
 	inc.y = (d.y > 0) ? 1 : -1;
 	d.x = ABS(d.x);
 	d.y = ABS(d.y);
-	ft_mlx_image_pixel_put(fdf->img, a.x, a.y, MLX_WHITE);
 	if (d.x > d.y)
   		bresenham_neg(fdf, inc, d, a);
     else
@@ -86,6 +86,7 @@ static void		calculpoint(int i, int j, t_fdf *fdf, t_point *a)
 		a->y = map_dist + (i * map_dist);
 		a->x -= map[i][j];
 		a->y -= map[i][j];
+		a->color = map[i][j];
 	}
 }
 

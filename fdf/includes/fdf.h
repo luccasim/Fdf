@@ -27,6 +27,7 @@ typedef struct	s_point
 {
 	double		x;
 	double		y;
+	int			color;
 }				t_point;
 
 typedef struct	s_vector
@@ -61,6 +62,8 @@ void	fdf_draw(t_fdf *fdf);
 */
 
 void		set_color(t_fdf *fdf);
+void		set_degrade(t_fdf *fdf);
+int			color_level(t_fdf *fdf, int level);
 void		zoom_map(int key, t_fdf *fdf);
 void		reset_vector(t_fdf *fdf);
 void		change_vector(t_fdf *fdf, int keycode);

@@ -39,13 +39,13 @@ void		zoom_map(int key, t_fdf *fdf)
 
 	map = fdf->map;
 	zoom = map->dist;
-	if (key == MLX_KEY_MOIN)
+	if (key == MLX_KEY_MOIN || key == 4)
 	{
 		zoom -= 5;
 		if (zoom <= 5)
 			zoom = 5;
 	}
-	if (key == MLX_KEY_PLUS)
+	if (key == MLX_KEY_PLUS || key == 5)
 	{
 		zoom += 5;
 		if (zoom > FDF_DIST_MAX)
