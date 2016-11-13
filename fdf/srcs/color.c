@@ -1,12 +1,25 @@
 #include "fdf.h"
 
+void			set_color(t_fdf *fdf)
+{
+	fdf->color = (fdf->color == 0) ? 1 : 0;
+	fdf_draw(fdf);
+	fdf_put_image(fdf);
+}
+
+void			set_degrade(t_fdf *fdf)
+{
+	fdf->color = (fdf->color) ? 2 : 0;
+	fdf_draw(fdf);
+	fdf_put_image(fdf);
+}
+
 static int		top_color(int level)
 {
 	int		i;
 	int		color;
 
 	i = 0;
-	// color = 0x00F28F39;
 	color = MLX_YELLOW;
 	while (i < level)
 	{
@@ -29,13 +42,6 @@ static int		low_color(int level)
 		i--;
 	}
 	return (color);
-}
-
-void			set_degrade(t_fdf *fdf)
-{
-	fdf->color = (fdf->color == 0) ? 0 : 2;
-	fdf_draw(fdf);
-	fdf_put_image(fdf);
 }
 
 int				color_level(t_fdf *fdf, int level)

@@ -34,15 +34,13 @@ void		reset_vector(t_fdf *fdf)
 
 void		zoom_map(int key, t_fdf *fdf)
 {
-	t_map 	*map;
 	size_t	zoom;
 
-	map = fdf->map;
-	zoom = map->dist;
+	zoom = fdf->map->dist;
 	if (key == MLX_KEY_MOIN || key == 4)
 	{
 		zoom -= 5;
-		if (zoom <= 5)
+		if (zoom < 5)
 			zoom = 5;
 	}
 	if (key == MLX_KEY_PLUS || key == 5)
@@ -51,14 +49,10 @@ void		zoom_map(int key, t_fdf *fdf)
 		if (zoom > FDF_DIST_MAX)
 			zoom = FDF_DIST_MAX;
 	}
-	fdf->map->dist = zoom;
-	fdf_draw(fdf);
-	fdf_put_image(fdf);
-}
-
-void		set_color(t_fdf *fdf)
-{
-	fdf->color = (fdf->color == 0) ? 1 : 0;
-	fdf_draw(fdf);
-	fdf_put_image(fdf);
+	if (zoom != fdf->map->dist)
+	{
+		fdf->map->dist = zoom;
+		fdf_draw(fdf);
+		fdf_put_image(fdf);
+	}
 }

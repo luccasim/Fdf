@@ -1,12 +1,6 @@
 #include "fdf.h"
-#include "ft_unix.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <fcntl.h>
-#include "list.h"
-#include "get_next_line.h"
 
-static t_image			*fdf_image(t_map *map)
+static t_image		*fdf_image(t_map *map)
 {
 	t_image *image;
 	size_t	image_width;
@@ -19,85 +13,47 @@ static t_image			*fdf_image(t_map *map)
 	return (image);
 }
 
-static int				fdf_key_hook(int keycode, void *param)
-{
-	t_mlx_key	key;
-	t_fdf		*fdf;
-
-	key = keycode;
-	fdf = (t_fdf*)param;
-	if (key == MLX_KEY_ESC)
-		exit(0);
-	if (key == MLX_KEY_D)
-		set_degrade(fdf);
-	if (key == MLX_KEY_C)
-		set_color(fdf);
-	if ( key == MLX_KEY_PLUS || key == MLX_KEY_MOIN)
-		zoom_map(keycode, fdf);
-	if (key == MLX_KEY_R)
-		reset_vector(fdf);
-	if (IS_ARROW(key))
-		change_vector(fdf, key);
-	return (keycode);
-}
-
-static int				fdf_mouse_hook(int button, int x, int y, void *p)
-{
-	t_fdf *fdf;
-
-	fdf = (t_fdf*)p;
-	if (button == 5)
-		zoom_map(button, fdf);
-	else if (button == 4)
-		zoom_map(button, fdf);
-	return (1);
-}
-
-static int				fdf_expose_hook(void *param)
-{
-	t_fdf *fdf;
-
-	fdf = (t_fdf *)param;
-	fdf_put_image(fdf);
-	return (1);
-}
-
-static t_fdf			*fdf_init(t_window *win, t_map *map)
+static t_fdf		*fdf_init(t_window *win, t_map *map, t_image *image)
 {
 	t_fdf		*fdf;
 	t_vector	*vector;
 
-	fdf = ft_memalloc(sizeof(t_fdf));
-	vector = ft_memalloc(sizeof(t_vector));
-	fdf->win = win;
-	fdf->map = map;
+	if ((fdf = ft_memalloc(sizeof(t_fdf))) == NULL)
+		return (NULL);
+	if ((vector = ft_memalloc(sizeof(t_vector))) == NULL)
+		return (NULL);
 	vector->point.x = 0;
 	vector->point.y = 0;
 	vector->dist = FDF_DIST_MAX;
-	fdf->img = fdf_image(map);
+	fdf->win = win;
+	fdf->map = map;
+	fdf->img = image;
 	fdf->vect = vector;
 	fdf->color = 0;
-	PUTSTR("ecriture dans l 'image!");
+	PUTSTR("Ecriture dans l 'image!");
+	TIME_START;
 	fdf_draw(fdf);
-	PUTSTR("affichage de l'image");
+	TIME_END;
+	PUTSTR("Affichage de l'image");
 	fdf_put_image(fdf);
 	return (fdf);
 }
 
-int						main(int ac, char **av)
+int					main(int ac, char **av)
 {
 	t_window	*win;
 	t_map		*map;
+	t_image		*image;
 	t_fdf		*fdf;
 
 	if ((map = parser(ac, av)) == NULL)
-		return (0);
+		return (FDF_EXIT);
 	if ((win = ft_mlx_window_new("FDF", FDF_W_WIDTH, FDF_W_HEIGTH)) == NULL)
-		return (0);
-	fdf = fdf_init(win, map);
-	mlx_key_hook(win->win, fdf_key_hook, fdf);
-	mlx_mouse_hook(win->win, fdf_mouse_hook, fdf);
-	mlx_expose_hook(win->win, fdf_expose_hook, fdf);
-	mlx_loop(win->mlx);
-	return (0);
+		return (FDF_EXIT);
+	if ((image = fdf_image(map)) == NULL)
+		return (FDF_EXIT);
+	if ((fdf = fdf_init(win, map, image)) == NULL)
+		return (FDF_EXIT);
+	fdf_hook(fdf);
+	return (FDF_EXIT);
 }

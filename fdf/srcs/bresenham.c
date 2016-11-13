@@ -92,11 +92,11 @@ static void		calculpoint(int i, int j, t_fdf *fdf, t_point *a)
 
 void			fdf_draw(t_fdf *fdf)
 {
-	t_point a;
-	t_point b;
-	int		i;
-	int		j;
-	t_map	*map;
+	t_point 	a;
+	t_point 	b;
+	size_t		i;
+	size_t		j;
+	t_map		*map;
 
 	ft_mlx_image_clear(fdf->img);
 	i = 0;
