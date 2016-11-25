@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   bresenham.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: luccasim <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/11/25 09:54:10 by luccasim          #+#    #+#             */
+/*   Updated: 2016/11/25 09:54:13 by luccasim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 static void		bresenham_neg(t_fdf *fdf, t_point inc, t_point d, t_point a)
@@ -17,7 +29,8 @@ static void		bresenham_neg(t_fdf *fdf, t_point inc, t_point d, t_point a)
 		{
 			cumul = cumul - d.x;
 			a.y = a.y + inc.y;
-			color = color_level(fdf, ++a.color);
+			a.color -= inc.y;
+			color = color_level(fdf, a.color);
 		}
 		ft_mlx_image_pixel_put(fdf->img, a.x, a.y, color);
 		i++;
@@ -41,7 +54,8 @@ static void		bresenham_pos(t_fdf *fdf, t_point inc, t_point d, t_point a)
 		{
 			cumul = cumul - d.y;
 			a.x = a.x + inc.x;
-			color = color_level(fdf, ++a.color);
+			a.color -= inc.x;
+			color = color_level(fdf, a.color);
 		}
 		ft_mlx_image_pixel_put(fdf->img, a.x, a.y, color);
 		i++;
@@ -64,9 +78,9 @@ static void		draw_line(t_point i, t_point f, t_fdf *fdf)
 	d.x = ABS(d.x);
 	d.y = ABS(d.y);
 	if (d.x > d.y)
-  		bresenham_neg(fdf, inc, d, a);
-    else
-    	bresenham_pos(fdf, inc, d, a);
+		bresenham_neg(fdf, inc, d, a);
+	else
+		bresenham_pos(fdf, inc, d, a);
 }
 
 static void		calculpoint(int i, int j, t_fdf *fdf, t_point *a)
@@ -92,8 +106,8 @@ static void		calculpoint(int i, int j, t_fdf *fdf, t_point *a)
 
 void			fdf_draw(t_fdf *fdf)
 {
-	t_point 	a;
-	t_point 	b;
+	t_point		a;
+	t_point		b;
 	size_t		i;
 	size_t		j;
 	t_map		*map;

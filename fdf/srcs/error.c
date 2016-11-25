@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   error.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: luccasim <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/11/25 09:52:42 by luccasim          #+#    #+#             */
+/*   Updated: 2016/11/25 09:52:45 by luccasim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 static int			usage(int format)
@@ -15,7 +27,7 @@ static int			usage(int format)
 	return (format);
 }
 
-int				fdf_exit(int error)
+int					fdf_exit(int error)
 {
 	if (error)
 		return (usage(ERROR));

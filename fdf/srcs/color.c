@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   color.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: luccasim <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/11/25 10:08:44 by luccasim          #+#    #+#             */
+/*   Updated: 2016/11/25 10:08:47 by luccasim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 void			set_color(t_fdf *fdf)
@@ -20,10 +32,10 @@ static int		top_color(int level)
 	int		color;
 
 	i = 0;
-	color = MLX_YELLOW;
+	color = FDF_SET_TOP_COLOR;
 	while (i < level)
 	{
-		color -= 0x00010400;
+		color -= 0x00011240;
 		i++;
 	}
 	return (color);
@@ -34,7 +46,7 @@ static int		low_color(int level)
 	int		i;
 	int		color;
 
-	color = 0x00000001;
+	color = FDF_SET_LOW_COLOR;
 	i = 0;
 	while (i > level)
 	{
@@ -53,6 +65,8 @@ int				color_level(t_fdf *fdf, int level)
 		return (color);
 	if (fdf->color == 1)
 	{
+		if (level == 0)
+			color = MLX_BLUE;
 		if (level >= 1)
 			color = MLX_GREEN;
 		if (level >= 4)
@@ -62,14 +76,9 @@ int				color_level(t_fdf *fdf, int level)
 		if (level >= 10)
 			color = MLX_BROWN;
 		if (level > 12)
-			color = MLX_RED;
+			color = MLX_WHITE;
 	}
-	else
-	{
-		if (level < 0)
-			color = low_color(level);
-		else
-			color = top_color(level);
-	}
+	else if (fdf->color == 2)
+		color = (level < 0) ? low_color(level) : top_color(level);
 	return (color);
 }

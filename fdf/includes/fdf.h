@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fdf.h                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: luccasim <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/11/25 13:10:05 by luccasim          #+#    #+#             */
+/*   Updated: 2016/11/25 13:10:08 by luccasim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FDF_H
 # define FDF_H
 
@@ -13,8 +25,10 @@
 # define FDF_DIST				15
 # define FDF_DIST_MAX			50
 
-# define FDF_EXIT				fdf_exit(FT_EXIT)		
-// # define FDF_EXIT_FAILURE		fdf_exit(1)
+# define FDF_EXIT				fdf_exit(FT_EXIT)
+
+# define FDF_SET_LOW_COLOR		MLX_BLUE
+# define FDF_SET_TOP_COLOR		MLX_BLOND
 
 typedef enum	e_fdf_error
 {

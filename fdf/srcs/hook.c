@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hook.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: luccasim <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/11/25 09:53:37 by luccasim          #+#    #+#             */
+/*   Updated: 2016/11/25 09:53:40 by luccasim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 static int			fdf_key_hook(int keycode, void *param)
@@ -13,7 +25,7 @@ static int			fdf_key_hook(int keycode, void *param)
 		set_degrade(fdf);
 	if (key == MLX_KEY_C)
 		set_color(fdf);
-	if ( key == MLX_KEY_PLUS || key == MLX_KEY_MOIN)
+	if (key == MLX_KEY_PLUS || key == MLX_KEY_MOIN)
 		zoom_map(keycode, fdf);
 	if (key == MLX_KEY_R)
 		reset_vector(fdf);

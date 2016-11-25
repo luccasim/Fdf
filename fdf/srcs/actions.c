@@ -1,12 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   actions.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: luccasim <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/11/25 09:52:30 by luccasim          #+#    #+#             */
+/*   Updated: 2016/11/25 09:52:34 by luccasim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 void		fdf_put_image(t_fdf *fdf)
 {
-	t_vector *v;
+	t_vector	*v;
+	void		*img;
+	void		*win;
+	void		*mlx;
 
 	v = fdf->vect;
+	mlx = fdf->win->mlx;
+	win = fdf->win->win;
+	img = fdf->img->img;
 	ft_mlx_window_clear(fdf->win);
-	mlx_put_image_to_window(fdf->win->mlx, fdf->win->win, fdf->img->img, v->point.x, v->point.y);
+	mlx_put_image_to_window(mlx, win, img, v->point.x, v->point.y);
 }
 
 void		change_vector(t_fdf *fdf, int keycode)
